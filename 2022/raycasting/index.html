@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Approach OverviewThe figure illustrates the functioning of the Ray Casting Algorithm in determining whether a point lies within a polygon. To determine if the point lies within the polygon, simply cre">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Ray Casting Algorithm to determine if a point inside a polygon">
+<meta property="og:url" content="http://huyhi.github.io/2022/raycasting/index.html">
+<meta property="og:site_name" content="Hongye&#39;s Blog">
+<meta property="og:description" content="Approach OverviewThe figure illustrates the functioning of the Ray Casting Algorithm in determining whether a point lies within a polygon. To determine if the point lies within the polygon, simply cre">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://huyhi.github.io/images/2022/raycasting/1.jpg">
+<meta property="article:published_time" content="2022-03-21T14:02:52.000Z">
+<meta property="article:modified_time" content="2023-06-24T16:20:31.289Z">
+<meta property="article:author" content="Hongye An">
+<meta property="article:tag" content="technology">
+<meta property="article:tag" content="gis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://huyhi.github.io/images/2022/raycasting/1.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Using Ray Casting Algorithm to determine if a point inside a polygon</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a href="/about/">About me</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/react-weather-01/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/geoindex/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://huyhi.github.io/2022/raycasting/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://huyhi.github.io/2022/raycasting/&text=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://huyhi.github.io/2022/raycasting/&is_video=false&description=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Using Ray Casting Algorithm to determine if a point inside a polygon&body=Check out this article: http://huyhi.github.io/2022/raycasting/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://huyhi.github.io/2022/raycasting/&name=Using Ray Casting Algorithm to determine if a point inside a polygon&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://huyhi.github.io/2022/raycasting/&t=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach-Overview"><span class="toc-number">1.</span> <span class="toc-text">Approach Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code"><span class="toc-number">2.</span> <span class="toc-text">Code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference:</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Using Ray Casting Algorithm to determine if a point inside a polygon
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Hongye An</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-03-21T14:02:52.000Z" class="dt-published" itemprop="datePublished">2022-03-21</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/gis/" rel="tag">gis</a>, <a class="p-category" href="/tags/technology/" rel="tag">technology</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Approach-Overview"><a href="#Approach-Overview" class="headerlink" title="Approach Overview"></a>Approach Overview</h2><p>The figure illustrates the functioning of the Ray Casting Algorithm in determining whether a point lies within a polygon.</p>
+<p>To determine if the point lies within the polygon, simply create a ray extending from the given point in any direction. Then, count the total number of intersections between the ray and the polygon boundary. If it is odd, the point is inside the polygon.</p>
+<p>In this way, as the figure illustrate:</p>
+<ul>
+<li><p>The ray starting from P1 does not intersect with the polygon boundary, indicating that P1 is located outside the polygon.</p>
+</li>
+<li><p>The ray originating from P2 intersects the boundary twice, yielding an even count, which indicates that P2 is situated outside the polygon.</p>
+</li>
+<li><p>Conversely, the ray originating from P3 intersects the boundary only once, resulting in an odd count, indicating that P3 lies inside the polygon.</p>
+</li>
+</ul>
+<p align="center">
+    <img src="/images/2022/raycasting/1.jpg" alt="Figure 1" width="50%" >
+</p>
+
+
+<!-- TODO -->
+<!-- ## Boundary Case -->
+<!-- TODO -->
+
+
+<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>Here is a piece of Python code script to implement this approach.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding: utf-8</span></span><br><span class="line"><span class="keyword">from</span> enum <span class="keyword">import</span> Enum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># use enum to define the relation</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Relation</span>(<span class="title class_ inherited__">Enum</span>):</span><br><span class="line">    WITHIN = <span class="number">1</span></span><br><span class="line">    BOUNDARY = <span class="number">2</span></span><br><span class="line">    OUTSIDE = <span class="number">3</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># use list such as [x, y] to represent a point</span></span><br><span class="line"><span class="comment"># use list such as [ [x0, y0], [x1, y1], [x2, y2] ... [xn, yn] ] to represent a 2D polygon without inner holes</span></span><br><span class="line"><span class="comment"># [x0, y0] is the same as [xn, yn], which means the polygon is closed.</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">check_in_poly</span>(<span class="params">point, polygon</span>):</span><br><span class="line">    <span class="comment"># variable intersection_num indicates the counter of the num of points that the ray intersect with the polygon</span></span><br><span class="line">    intersection_num = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    px, py = point[<span class="number">0</span>], point[<span class="number">1</span>]</span><br><span class="line">    <span class="comment"># The ray direction is along the X-axis direction</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(polygon)):</span><br><span class="line">        <span class="comment"># v1, v2 are vertex of the polygon,</span></span><br><span class="line">        v1 = polygon[i]</span><br><span class="line">        v2 = polygon[i + <span class="number">1</span>]</span><br><span class="line">        v1x, v1y = v1[<span class="number">0</span>], v1[<span class="number">1</span>]</span><br><span class="line">        v2x, v2y = v2[<span class="number">0</span>], v2[<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># check if point overlap with a vertex point</span></span><br><span class="line">        <span class="keyword">if</span> px == v1[<span class="number">0</span>] <span class="keyword">and</span> py == v2[<span class="number">0</span>]:</span><br><span class="line">            <span class="keyword">return</span> Relation.BOUNDARY</span><br><span class="line"></span><br><span class="line">        <span class="comment"># check if the ray go through the edge&#123;v1, v2&#125;</span></span><br><span class="line">        <span class="keyword">if</span> py &gt; <span class="built_in">max</span>(v1y, v2y) <span class="keyword">or</span> py &lt; <span class="built_in">min</span>(v1y, v2y):</span><br><span class="line">            <span class="comment"># won&#x27;t intersect with this edge</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> v2y != v1y:</span><br><span class="line">            x_expect_on_line = (py - v1y) * (v2x - v1x) / (v2y - v1y) + px</span><br><span class="line">            <span class="keyword">if</span> px == x_expect_on_line:</span><br><span class="line">                <span class="keyword">return</span> Relation.BOUNDARY</span><br><span class="line">            <span class="keyword">elif</span> px &lt; x_expect_on_line:</span><br><span class="line">                intersection_num += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Relation.WITHIN <span class="keyword">if</span> intersection_num % <span class="number">2</span> == <span class="number">1</span> <span class="keyword">else</span> Relation.OUTSIDE</span><br></pre></td></tr></table></figure>
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h2><blockquote>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://philliplemons.com/posts/ray-casting-algorithm" title="Ray Casting Algorithm">Ray Casting Algorithm</a></li>
+</ol>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a href="/about/">About me</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Approach-Overview"><span class="toc-number">1.</span> <span class="toc-text">Approach Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Code"><span class="toc-number">2.</span> <span class="toc-text">Code</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference:</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://huyhi.github.io/2022/raycasting/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://huyhi.github.io/2022/raycasting/&text=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://huyhi.github.io/2022/raycasting/&is_video=false&description=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Using Ray Casting Algorithm to determine if a point inside a polygon&body=Check out this article: http://huyhi.github.io/2022/raycasting/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://huyhi.github.io/2022/raycasting/&title=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://huyhi.github.io/2022/raycasting/&name=Using Ray Casting Algorithm to determine if a point inside a polygon&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://huyhi.github.io/2022/raycasting/&t=Using Ray Casting Algorithm to determine if a point inside a polygon"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Hongye An
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a href="/about/">About me</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'hongyeblog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>

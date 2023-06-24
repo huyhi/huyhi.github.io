@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Shared electric bikes have been steadily growing in popularity in these years, with many new developments and trends emerging in the market. However, it also brought many problems, one of them being t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Geofence index in a shared electric bike application">
+<meta property="og:url" content="http://huyhi.github.io/2022/geoindex/index.html">
+<meta property="og:site_name" content="Hongye&#39;s Blog">
+<meta property="og:description" content="Shared electric bikes have been steadily growing in popularity in these years, with many new developments and trends emerging in the market. However, it also brought many problems, one of them being t">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://huyhi.github.io/images/2022/geoindex/geofence1.jpg">
+<meta property="og:image" content="http://huyhi.github.io/images/2022/geoindex/geohash1.jpg">
+<meta property="og:image" content="http://huyhi.github.io/images/2022/geoindex/geohash2.jpg">
+<meta property="og:image" content="http://huyhi.github.io/images/2022/geoindex/impl2.jpg">
+<meta property="og:image" content="http://huyhi.github.io/images/2022/geoindex/impl3.jpg">
+<meta property="article:published_time" content="2022-02-12T20:49:39.000Z">
+<meta property="article:modified_time" content="2023-06-24T16:20:31.289Z">
+<meta property="article:author" content="Hongye An">
+<meta property="article:tag" content="technology">
+<meta property="article:tag" content="gis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://huyhi.github.io/images/2022/geoindex/geofence1.jpg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Geofence index in a shared electric bike application</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a href="/about/">About me</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/raycasting/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://huyhi.github.io/2022/geoindex/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://huyhi.github.io/2022/geoindex/&text=Geofence index in a shared electric bike application"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://huyhi.github.io/2022/geoindex/&is_video=false&description=Geofence index in a shared electric bike application"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Geofence index in a shared electric bike application&body=Check out this article: http://huyhi.github.io/2022/geoindex/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://huyhi.github.io/2022/geoindex/&name=Geofence index in a shared electric bike application&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://huyhi.github.io/2022/geoindex/&t=Geofence index in a shared electric bike application"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Geofence"><span class="toc-number">1.</span> <span class="toc-text">1. Geofence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-System-Design"><span class="toc-number">2.</span> <span class="toc-text">2. System Design</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-GeoHash"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 GeoHash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Redis"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Geo-index-implementation"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 Geo index implementation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference:</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Geofence index in a shared electric bike application
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Hongye An</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-02-12T20:49:39.000Z" class="dt-published" itemprop="datePublished">2022-02-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/gis/" rel="tag">gis</a>, <a class="p-category" href="/tags/technology/" rel="tag">technology</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Shared electric bikes have been steadily growing in popularity in these years, with many new developments and trends emerging in the market. However, it also brought many problems, one of them being the regulation of riding. </p>
+<p>As the demand increases, many dockless bicycles system grow coverage very quickly. However, dockless systems still need to be load balanced and they have faced criticism because of vandalism and unregulated use of public spaces, such as sidewalks, front of the door and car parks.</p>
+<h2 id="1-Geofence"><a href="#1-Geofence" class="headerlink" title="1. Geofence"></a>1. Geofence</h2><p>A geofence may be a good choice to solve and improve the above issues. A geofence is a kind of virtual boundary or perimeter on the map representing a real-world area. Paired with GPS or RFID equipment on the bike, the geofence could be used to define a specific area or zone that may mean different geofence commands, such as parking areas, no parking areas, low-speed areas and so on.</p>
+<p align="center">
+    <img src="/images/2022/geoindex/geofence1.jpg" alt="Figure 1. geofence representation in the shared bike app" width="40%" >
+</p>
+
+
+<p>The main idea of implementing the above function is to determine the spital relation of the bike and the great number of geofences. Technically, there are so many approaches and solutions to achieve that, this page, would introduce an approach base on the GeoHash algorithm and Redis storage to build a high-performance geofence index for queries.</p>
+<h2 id="2-System-Design"><a href="#2-System-Design" class="headerlink" title="2. System Design"></a>2. System Design</h2><h3 id="2-1-GeoHash"><a href="#2-1-GeoHash" class="headerlink" title="2.1 GeoHash"></a>2.1 GeoHash</h3><p>First, this page would introduce the GeoHash algorithm – a unique encoding method for geography location, it always used in spatial querying. It is a hierarchical spatial data structure which subdivides space into buckets of grid shape, which means if we want to represent a point by geoHash, the map would recursively divide into smaller and smaller grids till the precision level we wanted. </p>
+<p align="center">
+    <img src="/images/2022/geoindex/geohash1.jpg" alt="Figure 2. how geohash works" width="75%" >
+</p>
+
+<p>And then, as our desired precision (Level 7), the geohash encode value will look like a quaternary string:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">28 29 4 14 10 19 11</span><br></pre></td></tr></table></figure>
+
+<p>For exact latitude and longitude translations Geohash is a spatial index of base4. To be a compact code it uses base 32 and represents its values by the following alphabet, that is the “standard textual representation”.</p>
+<table>
+<thead>
+<tr>
+<th>Decimal</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Base 32</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>5</td>
+<td>6</td>
+<td>7</td>
+<td>8</td>
+<td>9</td>
+<td>b</td>
+<td>c</td>
+<td>d</td>
+<td>e</td>
+<td>f</td>
+<td>g</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Decimal</th>
+<th>16</th>
+<th>17</th>
+<th>18</th>
+<th>19</th>
+<th>20</th>
+<th>21</th>
+<th>22</th>
+<th>23</th>
+<th>24</th>
+<th>25</th>
+<th>26</th>
+<th>27</th>
+<th>28</th>
+<th>29</th>
+<th>30</th>
+<th>31</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Base 32</td>
+<td>h</td>
+<td>j</td>
+<td>k</td>
+<td>m</td>
+<td>n</td>
+<td>p</td>
+<td>q</td>
+<td>r</td>
+<td>s</td>
+<td>t</td>
+<td>u</td>
+<td>v</td>
+<td>w</td>
+<td>x</td>
+<td>y</td>
+<td>z</td>
+</tr>
+</tbody></table>
+<p>The geohash code of the quaternary string is: <code>wx4fbmc</code>, which represents an area in Beijing.</p>
+<p align="center">
+    <img src="/images/2022/geoindex/geohash2.jpg" alt="Figure 3. geohash code: wx4fbmc on map" width="75%" >
+</p>
+
+<p>Till now, we got an encoding method for the spatial data. And the following page would introduce how it works to implement geofence query. </p>
+<h3 id="2-2-Redis"><a href="#2-2-Redis" class="headerlink" title="2.2 Redis"></a>2.2 Redis</h3><p>Redis is an open-source, in-memory KV data structure store that is used as a database or cache. It is often referred to as a data structure server because it allows users to store, retrieve, and manipulate data structures such as lists, sets, and hashes.</p>
+<p>Redis is known for its high performance and scalability, and it is often used in high-traffic web applications and real-time systems. One of the reasons for its speed is that it stores all its data in RAM, making it faster to read and write than traditional disk-based databases.</p>
+<p>Overall, Redis is a powerful and flexible tool for managing data, so in this project, it was used for data storage.</p>
+<h3 id="2-3-Geo-index-implementation"><a href="#2-3-Geo-index-implementation" class="headerlink" title="2.3 Geo index implementation"></a>2.3 Geo index implementation</h3><p>The fundamental concept behind implementing geofence spatial search is to use geohash values as an index. To begin with, we must calculate the geohash encoded value of the geofence. In other words, we need to determine the specific blocks of geohash that cover the geofence.</p>
+<p>As the figure below, we can find that 6 geohash blocks overlap with the target geofence, and the geohash (level 7) code of the blocks are: <code>gcpvhed</code>, <code>gcpvhee</code>, <code>gcpvhe8</code>, <code>gcpvhef</code>, <code>gcpvheg</code>, <code>gcpvhe9</code>.</p>
+<p align="center">
+    <img src="/images/2022/geoindex/impl2.jpg" alt="Figure 4. geohash blocks and geofence" width="75%" >
+</p>
+
+<p>To determine the spatial relationship of a point with geofences, a possible approach is to calculate the geohash value of the point. This value can be used to retrieve all the geofences that share the same geohash value, indicating a potential intersection with the point. By focusing on this subset of geofences, it is then possible to calculate the spatial relationship of the point with each one of them. This strategy is similar to using indexes and allows for finding a small number of relevant geofences with higher efficiency.</p>
+<p>Storing the geohash value of a fence in Redis can be an effective strategy. A suitable data structure for this purpose is Sets in Redis. To illustrate this approach, consider a geofence with an ID of 123. In this case, the geohash value of the fence can be stored in Redis, as shown in the figure below.</p>
+<p align="center">
+    <img src="/images/2022/geoindex/impl3.jpg" alt="Figure 5. geohash value and geofence id in Redis" width="40%" >
+</p>
+
+<p>If another geofence shared the same geohash value with the fence, just append the id to the corresponding value in the Redis. This approach leverages the data structure of Sets in Redis to efficiently store and retrieve multiple geofences that have the same geohash value. </p>
+<p>The last thing needed to do is determin the spatial relationship of the point with a single geofence. This part is not the focus of the content introduced in this article, please refer to my another post <a href="/2022/raycasting/" title="Using Ray Casting Algorithm to determine if a point inside a polygon">Using Ray Casting Algorithm to determine if a point inside a polygon</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h2><blockquote>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.verizonconnect.com/uk/glossary/what-is-a-geofence/" title="Verizon Connact: What is a geofence">Verizon Connact: What is a geofence</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Geohash" title="GeoHash wikipedia">GeoHash wikipedia</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Bonsanto/polygon-geohasher," title="Github polygon-geohasher">Github polygon-geohasher</a></li>
+</ol>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a href="/about/">About me</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Geofence"><span class="toc-number">1.</span> <span class="toc-text">1. Geofence</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-System-Design"><span class="toc-number">2.</span> <span class="toc-text">2. System Design</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-GeoHash"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 GeoHash</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Redis"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Geo-index-implementation"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 Geo index implementation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference:</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://huyhi.github.io/2022/geoindex/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://huyhi.github.io/2022/geoindex/&text=Geofence index in a shared electric bike application"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://huyhi.github.io/2022/geoindex/&is_video=false&description=Geofence index in a shared electric bike application"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Geofence index in a shared electric bike application&body=Check out this article: http://huyhi.github.io/2022/geoindex/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://huyhi.github.io/2022/geoindex/&title=Geofence index in a shared electric bike application"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://huyhi.github.io/2022/geoindex/&name=Geofence index in a shared electric bike application&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://huyhi.github.io/2022/geoindex/&t=Geofence index in a shared electric bike application"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Hongye An
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a href="/about/">About me</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'hongyeblog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
