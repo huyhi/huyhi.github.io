@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="In this section, we will discuss the implementation of the city search input text area and how to trigger the fetching of city data as we type into the text area.                  When it comes to the">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build a weather web page from scratch with react - 0x03">
+<meta property="og:url" content="http://huyhi.github.io/2023/react-weather-03/index.html">
+<meta property="og:site_name" content="Hongye&#39;s Blog">
+<meta property="og:description" content="In this section, we will discuss the implementation of the city search input text area and how to trigger the fetching of city data as we type into the text area.                  When it comes to the">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://huyhi.github.io/images/2023/react-weather-03/01.png">
+<meta property="og:image" content="http://huyhi.github.io/images/2023/react-weather-03/02.png">
+<meta property="article:published_time" content="2023-02-13T02:12:08.000Z">
+<meta property="article:modified_time" content="2023-07-08T17:11:57.203Z">
+<meta property="article:author" content="Hongye An">
+<meta property="article:tag" content="frontend">
+<meta property="article:tag" content="react">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://huyhi.github.io/images/2023/react-weather-03/01.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Build a weather web page from scratch with react - 0x03</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a href="/about/">About me</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/react-weather-02/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://huyhi.github.io/2023/react-weather-03/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://huyhi.github.io/2023/react-weather-03/&text=Build a weather web page from scratch with react - 0x03"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://huyhi.github.io/2023/react-weather-03/&is_video=false&description=Build a weather web page from scratch with react - 0x03"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Build a weather web page from scratch with react - 0x03&body=Check out this article: http://huyhi.github.io/2023/react-weather-03/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://huyhi.github.io/2023/react-weather-03/&name=Build a weather web page from scratch with react - 0x03&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://huyhi.github.io/2023/react-weather-03/&t=Build a weather web page from scratch with react - 0x03"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Build a weather web page from scratch with react - 0x03
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Hongye An</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-13T02:12:08.000Z" class="dt-published" itemprop="datePublished">2023-02-13</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/frontend/" rel="tag">frontend</a>, <a class="p-category" href="/tags/react/" rel="tag">react</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>In this section, we will discuss the implementation of the city search input text area and how to trigger the fetching of city data as we type into the text area. </p>
+<p align="center">
+    <img src="/images/2023/react-weather-03/01.png" alt="Figure 1"  width="50%">
+</p>
+
+<p align="center">
+    <img src="/images/2023/react-weather-03/02.png" alt="Figure 2"  width="50%">
+</p>
+
+<p>When it comes to the input area, we have the option to create a simple input box using vanilla HTML&#x2F;CSS&#x2F;JavaScript. However, utilizing third-party UI libraries can offer a more convenient solution with user-friendly APIs. An excellent choice for us is <a target="_blank" rel="noopener" href="https://mui.com/">MUI</a>, which integrates numerous components to assist in building an appealing and interactive UI. To add MUI dependencies, we can use npm and execute the following command:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install @mui/material @emotion/react @emotion/styled</span><br></pre></td></tr></table></figure>
+
+<p>Once the above dependencies are added, we can explore the suitable component for our scenario, such as the <a target="_blank" rel="noopener" href="https://mui.com/material-ui/react-autocomplete/">Autocomplete</a> component. Consequently, our text input component will resemble the following:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">TextField</span> <span class="keyword">from</span> <span class="string">&#x27;@mui/material/TextField&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Autocomplete</span> <span class="keyword">from</span> <span class="string">&#x27;@mui/material/Autocomplete&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span> <span class="title function_">SearchInput</span>(<span class="params"></span>) &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> [options, setOptions] = <span class="title function_">useState</span>([])</span><br><span class="line">  <span class="keyword">const</span> [value, setValue] = <span class="title function_">useState</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">Autocomplete</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">id</span>=<span class="string">&quot;search-input&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">disablePortal</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">value</span>=<span class="string">&#123;value&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">options</span>=<span class="string">&#123;options&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">      <span class="attr">renderInput</span>=<span class="string">&#123;(props)</span> =&gt;</span> &#123;</span></span><br><span class="line"><span class="language-xml">        return <span class="tag">&lt;<span class="name">TextField</span> &#123;<span class="attr">...props</span>&#125; <span class="attr">label</span>=<span class="string">&quot;Search your location (at least 2 letters)&quot;</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#125;&#125;</span></span><br><span class="line"><span class="language-xml">      renderOption=&#123;(props, option) =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">        return (<span class="tag">&lt;<span class="name">div</span> &#123;<span class="attr">...props</span>&#125; <span class="attr">key</span>=<span class="string">&#123;option.label&#125;</span>&gt;</span> &#123;option.label&#125; <span class="tag">&lt;/<span class="name">div</span>&gt;</span>)</span></span><br><span class="line"><span class="language-xml">      &#125;&#125;</span></span><br><span class="line"><span class="language-xml">      onChange=&#123;(event, selected) =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">        // text area changed, need to fetch city data</span></span><br><span class="line"><span class="language-xml">      &#125;&#125;</span></span><br><span class="line"><span class="language-xml">      onInputChange=&#123;(event) =&gt; &#123;</span></span><br><span class="line"><span class="language-xml">        // option selected, need to fetch selected city weather data</span></span><br><span class="line"><span class="language-xml">      &#125;&#125;</span></span><br><span class="line"><span class="language-xml">    /&gt;</span></span><br><span class="line">  )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In this snippet of code, we create a React component named SearchInput, and this componenct was based on MUI Autocomplete component, we only need to refer to the <a target="_blank" rel="noopener" href="https://mui.com/material-ui/react-autocomplete/">MUI document</a> and rewrite some essential props provided by MUI or styling it to achieve our desired functionality.</p>
+<blockquote>
+<p>View full code base of the weather app via my github: <a target="_blank" rel="noopener" href="https://github.com/huyhi/react-weather">react-weather</a></p>
+</blockquote>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a href="/about/">About me</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://huyhi.github.io/2023/react-weather-03/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://huyhi.github.io/2023/react-weather-03/&text=Build a weather web page from scratch with react - 0x03"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://huyhi.github.io/2023/react-weather-03/&is_video=false&description=Build a weather web page from scratch with react - 0x03"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Build a weather web page from scratch with react - 0x03&body=Check out this article: http://huyhi.github.io/2023/react-weather-03/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://huyhi.github.io/2023/react-weather-03/&title=Build a weather web page from scratch with react - 0x03"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://huyhi.github.io/2023/react-weather-03/&name=Build a weather web page from scratch with react - 0x03&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://huyhi.github.io/2023/react-weather-03/&t=Build a weather web page from scratch with react - 0x03"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Hongye An
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a href="/about/">About me</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'hongyeblog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
