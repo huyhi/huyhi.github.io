@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Why Docker ?With docker, it allowed users to create a isolate and independent enviroment to run their code or software. Using docker, we don’t need to worry about depedencies or compilation. What we n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build my first docker image">
+<meta property="og:url" content="http://huyhi.github.io/2023/docker/index.html">
+<meta property="og:site_name" content="Hongye&#39;s Blog">
+<meta property="og:description" content="Why Docker ?With docker, it allowed users to create a isolate and independent enviroment to run their code or software. Using docker, we don’t need to worry about depedencies or compilation. What we n">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://huyhi.github.io/images/2023/docker/01.png">
+<meta property="og:image" content="http://huyhi.github.io/images/2023/docker/02.png">
+<meta property="og:image" content="http://huyhi.github.io/images/2023/docker/03.png">
+<meta property="article:published_time" content="2023-02-27T12:01:54.000Z">
+<meta property="article:modified_time" content="2023-08-15T00:58:58.771Z">
+<meta property="article:author" content="Hongye An">
+<meta property="article:tag" content="Docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://huyhi.github.io/images/2023/docker/01.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Build my first docker image</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a href="/about/">About me</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/react-weather-04/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://huyhi.github.io/2023/docker/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://huyhi.github.io/2023/docker/&text=Build my first docker image"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://huyhi.github.io/2023/docker/&is_video=false&description=Build my first docker image"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Build my first docker image&body=Check out this article: http://huyhi.github.io/2023/docker/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://huyhi.github.io/2023/docker/&name=Build my first docker image&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://huyhi.github.io/2023/docker/&t=Build my first docker image"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Docker"><span class="toc-number">1.</span> <span class="toc-text">Why Docker ?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-vs-Virtual-Machine"><span class="toc-number">2.</span> <span class="toc-text">Docker vs. Virtual Machine ?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-to-build-a-docker-container"><span class="toc-number">3.</span> <span class="toc-text">Start to build a docker container.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-the-docker-image"><span class="toc-number">4.</span> <span class="toc-text">Run the docker image</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Build my first docker image
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Hongye An</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-27T12:01:54.000Z" class="dt-published" itemprop="datePublished">2023-02-27</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Docker/" rel="tag">Docker</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h3 id="Why-Docker"><a href="#Why-Docker" class="headerlink" title="Why Docker ?"></a>Why Docker ?</h3><p>With docker, it allowed users to create a isolate and independent enviroment to run their code or software.</p>
+<p>Using docker, we don’t need to worry about depedencies or compilation. What we need to is launch your container and your application will run immediately.</p>
+<h3 id="Docker-vs-Virtual-Machine"><a href="#Docker-vs-Virtual-Machine" class="headerlink" title="Docker vs. Virtual Machine ?"></a>Docker vs. Virtual Machine ?</h3><p>Docker is more light than VM.</p>
+<p>A VM will include a whole operate system. It work independently and act like a computer.</p>
+<p>Docker will only share the resources of the host machine in order to run its enviroments.</p>
+<p>So that, Docker is faster and it could launch quickly. And it’s convinent that once the Docker is configured, we don’t need to install other depedency softwares, we could start or stop container quickly and easily.</p>
+<h3 id="Start-to-build-a-docker-container"><a href="#Start-to-build-a-docker-container" class="headerlink" title="Start to build a docker container."></a>Start to build a docker container.</h3><p>In this section, I want to use a simple Flask project to introduce how to create a docker container.</p>
+<p>First, we could create a Flask app as below.</p>
+<p align="center">
+    <img src="/images/2023/docker/01.png" alt="Figure 1" >
+</p>
+
+<p>And as it shown, when we call <code>flask run</code>, the server binds on our 5000 port and runs smoothly.</p>
+<p>Now, if we want to pack our server into a docker container, we need to create a Dockerfile in the root floder. This file is used to config want we want to do in this docker container. Our goal here is to launch a Python script.</p>
+<figure class="highlight docker"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># A dockerfile must always start by importing the base image.</span></span><br><span class="line"><span class="comment"># We use the keyword &#x27;FROM&#x27; to do that.</span></span><br><span class="line"><span class="comment"># `python:latest` is the offical docker image of Python</span></span><br><span class="line"><span class="keyword">FROM</span> python:latest</span><br><span class="line"></span><br><span class="line"><span class="comment"># copy app.py to our image</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> app.py /</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># use pip to install flask dependency</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip install Flask</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># define the command we want to run in the image</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;flask&quot;</span>, <span class="string">&quot;run&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>After finished editing Dockerfile, we could run the following command to build our container.</p>
+<p><code>-t</code> flag indicate the name of the container and the dot “.” means you use the Dockerfile in the current directory.</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker build -t docker-flask .</span></span><br></pre></td></tr></table></figure>
+
+<p align="center">
+    <img src="/images/2023/docker/02.png" alt="Figure 2" >
+</p>
+
+
+<h3 id="Run-the-docker-image"><a href="#Run-the-docker-image" class="headerlink" title="Run the docker image"></a>Run the docker image</h3><p>Once our image was created successfully, we could launch our image.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run docker-flask</span><br></pre></td></tr></table></figure>
+
+<p align="center">
+    <img src="/images/2023/docker/03.png" alt="Figure 3" >
+</p>
+
+<p>And you could noticed that flask log was output in the terminal, So far, we build a basic docker container.</p>
+
+  </div>
+</article>
+
+    <div class="blog-post-comments">
+        <div id="disqus_thread">
+            <noscript>Please enable JavaScript to view the comments.</noscript>
+        </div>
+    </div>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/tags/">Tags</a></li>
+        
+          <li><a href="/about/">About me</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Why-Docker"><span class="toc-number">1.</span> <span class="toc-text">Why Docker ?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker-vs-Virtual-Machine"><span class="toc-number">2.</span> <span class="toc-text">Docker vs. Virtual Machine ?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Start-to-build-a-docker-container"><span class="toc-number">3.</span> <span class="toc-text">Start to build a docker container.</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-the-docker-image"><span class="toc-number">4.</span> <span class="toc-text">Run the docker image</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://huyhi.github.io/2023/docker/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://huyhi.github.io/2023/docker/&text=Build my first docker image"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://huyhi.github.io/2023/docker/&is_video=false&description=Build my first docker image"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Build my first docker image&body=Check out this article: http://huyhi.github.io/2023/docker/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://huyhi.github.io/2023/docker/&title=Build my first docker image"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://huyhi.github.io/2023/docker/&name=Build my first docker image&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://huyhi.github.io/2023/docker/&t=Build my first docker image"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2023
+    Hongye An
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/tags/">Tags</a></li><!--
+     --><!--
+       --><li><a href="/about/">About me</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+    <script type="text/javascript">
+        var disqus_shortname = 'hongyeblog';
+
+        (function(){
+            var dsq = document.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        }());
+    </script>
+
+<!-- utterances Comments -->
+
+</body>
+</html>
